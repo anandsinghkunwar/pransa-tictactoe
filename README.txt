@@ -1,2 +1,1 @@
-Hello Testing
-
+This is the README file.
