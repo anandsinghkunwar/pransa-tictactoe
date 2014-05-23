@@ -10,7 +10,7 @@ def check_winner(matrix):
         return matrix[2][0]
     elif (matrix[0][0]==matrix[1][0]==matrix[2][0]!='s'):
         return matrix[0][0]
-    elif (matrix[0][1]==matrix[1][1]==matrix[1][2]!='s'):
+    elif (matrix[0][1]==matrix[1][1]==matrix[2][1]!='s'):
         return matrix[0][1]
     elif (matrix[0][2]==matrix[1][2]==matrix[2][2]!='s'):
         return matrix[0][2]
@@ -68,15 +68,24 @@ while True:
                     for i in xrange(3):
                         for j in xrange(3):
                             if ((pos[0]>coord_of_cells[x][y][i][j][0])and(pos[0]<coord_of_cells[x][y][i][j][0]+70)and(pos[1]>coord_of_cells[x][y][i][j][1])and(pos[1]<coord_of_cells[x][y][i][j][1]+70)):
+
                                 if (matrix[x][y][i][j]!='s'):
                                     pass
 
                                 elif((iprev==-1)and(jprev==-1)):
-                                    screen.blit(XSMALLimageObject,coord_of_cells[x][y][i][j])
-                                    player+=1
-                                    matrix[x][y][i][j]='x'
-                                    iprev=i
-                                    jprev=j
+                                    if(player%2==1):
+                                        screen.blit(XSMALLimageObject,coord_of_cells[x][y][i][j])
+                                        player+=1
+                                        matrix[x][y][i][j]='x'
+                                        iprev=i
+                                        jprev=j
+
+                                    else:
+                                        screen.blit(OSMALLimageObject,coord_of_cells[x][y][i][j])
+                                        player+=1
+                                        matrix[x][y][i][j]='o'
+                                        iprev=i
+                                        jprev=j
                                 
                                 elif((x==iprev)and(y==jprev)):
                                     if(player%2==1):
@@ -100,10 +109,17 @@ while True:
                                     if(check_winner(matrix[x][y])=='x'):
                                         screen.blit(XLARGEimageObject,coord_of_cells[x][y][0][0])
                                         main_matrix[x][y]='x'
+                                        #print 45
 
                                     else:
                                         screen.blit(OLARGEimageObject,coord_of_cells[x][y][0][0])
                                         main_matrix[x][y]='o'
+                                        #print 34
+
+                                    if(check_winner(main_matrix)!='s'):
+                                        print "The winner is"+ check_winner(main_matrix)
+                                        pygame.quit()
+                                        sys.exit()
 
                                 if(main_matrix[iprev][jprev]!='s'):
                                     iprev=-1
