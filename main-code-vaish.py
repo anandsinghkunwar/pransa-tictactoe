@@ -117,7 +117,7 @@ while True:
                                         #print 34
 
                                     if(check_winner(main_matrix)!='s'):
-                                        print "The winner is"+ check_winner(main_matrix)
+                                        print "The winner is "+ check_winner(main_matrix)
                                         pygame.quit()
                                         sys.exit()
 
