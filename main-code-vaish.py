@@ -109,15 +109,13 @@ while True:
                                     if(check_winner(matrix[x][y])=='x'):
                                         screen.blit(XLARGEimageObject,coord_of_cells[x][y][0][0])
                                         main_matrix[x][y]='x'
-                                        #print 45
 
                                     else:
                                         screen.blit(OLARGEimageObject,coord_of_cells[x][y][0][0])
                                         main_matrix[x][y]='o'
-                                        #print 34
 
                                     if(check_winner(main_matrix)!='s'):
-                                        print "The winner is"+ check_winner(main_matrix)
+                                        print "The winner is "+ check_winner(main_matrix)
                                         pygame.quit()
                                         sys.exit()
 
