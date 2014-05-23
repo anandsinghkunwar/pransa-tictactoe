@@ -49,6 +49,8 @@ XLARGEimageObject=pygame.image.load(xlimg).convert_alpha()
 OLARGEimageObject=pygame.image.load(olimg).convert_alpha()
 
 player=1
+iprev=-1
+jprev=-1
 
 screen.blit(BackgroundimageObject,(0,0))
 
@@ -69,7 +71,7 @@ while True:
                                 if (matrix[x][y][i][j]!='s'):
                                     pass
 
-                                elif(player==1):
+                                elif((iprev==-1)and(jprev==-1)):
                                     screen.blit(XSMALLimageObject,coord_of_cells[x][y][i][j])
                                     player+=1
                                     matrix[x][y][i][j]='x'
@@ -93,5 +95,19 @@ while True:
 
                                 else:
                                     pass
+
+                                if(check_winner(matrix[x][y])!='s'):
+                                    if(check_winner(matrix[x][y])=='x'):
+                                        screen.blit(XLARGEimageObject,coord_of_cells[x][y][0][0])
+                                        main_matrix[x][y]='x'
+
+                                    else:
+                                        screen.blit(OLARGEimageObject,coord_of_cells[x][y][0][0])
+                                        main_matrix[x][y]='o'
+
+                                if(main_matrix[iprev][jprev]!='s'):
+                                    iprev=-1
+                                    jprev=-1
+                                
 
     pygame.display.update()
