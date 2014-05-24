@@ -1,6 +1,49 @@
 import pygame, sys
 from pygame.locals import *
 
+def check_win_main(matrix):
+
+    copy_matrix_x=[['s' for x in xrange(3)] for x in xrange(3)]
+    copy_matrix_o=[['s' for x in xrange(3)] for x in xrange(3)]
+    
+    for x in xrange(3):
+        for y in xrange(3):
+            if(matrix[x][y]=='t'):
+                copy_matrix_x[x][y]='x'
+            else:
+                copy_matrix_x[x][x]=matrix[x][y]
+
+    for x in xrange(3):
+        for y in xrange(3):
+            if(matrix[x][y]=='t'):
+                copy_matrix_o[x][y]='o'
+            else:
+                copy_matrix_o[x][x]=matrix[x][y]
+
+    flag=0
+
+    for x in xrange(3):
+        for y in xrange(3):
+            if(matrix[x][y]=='s'):
+                flag=1
+                break;
+
+    if(flag==0):
+        return 't'
+
+    if((check_winner(copy_matrix_o)=='o') and (check_winner(copy_matrix_x)=='x')):
+        return 's'
+
+    elif(check_winner(copy_matrix_o)=='o'):
+        return 'o'
+
+    elif(check_winner(copy_matrix_x)=='x'):
+        return 'x'
+
+    else:
+        return 's'
+    
+
 def check_winner(matrix):
     if(matrix[0][0]==matrix[0][1]==matrix[0][2]!='s'):
         return matrix[0][0]
@@ -19,8 +62,12 @@ def check_winner(matrix):
     elif (matrix[0][2]==matrix[1][1]==matrix[2][0]!='s'):
         return matrix[0][2]
     else:
-        return 's'
-    
+        for x in xrange(3):
+            for y in xrange(3):
+                if(matrix[x][y]=='s'):
+                    return 's'
+    return 't'
+
 matrix=[[[['s','s','s'],['s','s','s'],['s','s','s']] for x in xrange(3)] for x in xrange(3)]
 main_matrix=[['s','s','s'],['s','s','s'],['s','s','s']]
 
@@ -37,6 +84,7 @@ xsimg="./img/xsmall.png"
 osimg="./img/osmall.png"
 xlimg="./img/xbig.png"
 olimg="./img/obig.png"
+timg="./img/tie.png"
 
 pygame.init()
     
@@ -47,6 +95,7 @@ XSMALLimageObject=pygame.image.load(xsimg).convert_alpha()
 OSMALLimageObject=pygame.image.load(osimg).convert_alpha()
 XLARGEimageObject=pygame.image.load(xlimg).convert_alpha()
 OLARGEimageObject=pygame.image.load(olimg).convert_alpha()
+TLARGEimageObject=pygame.image.load(timg).convert_alpha()
 
 player=1
 iprev=-1
@@ -110,12 +159,21 @@ while True:
                                         screen.blit(XLARGEimageObject,coord_of_cells[x][y][0][0])
                                         main_matrix[x][y]='x'
 
-                                    else:
+                                    elif(check_winner(matrix[x][y])=='o'):
                                         screen.blit(OLARGEimageObject,coord_of_cells[x][y][0][0])
                                         main_matrix[x][y]='o'
 
-                                    if(check_winner(main_matrix)!='s'):
-                                        print "The winner is "+ check_winner(main_matrix)
+                                    else:
+                                        screen.blit(TLARGEimageObject,coord_of_cells[x][y][0][0])
+                                        main_matrix[x][y]='t'
+
+                                    if(check_win_main(main_matrix)!='s'):
+
+                                        if(check_win_main(main_matrix)!='t'):
+                                            print "The winner is "+ check_win_main(main_matrix)
+                                        else:
+                                            print "The game is a tie"
+
                                         pygame.quit()
                                         sys.exit()
 
