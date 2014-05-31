@@ -11,14 +11,14 @@ def check_win_main(matrix):
             if(matrix[x][y]=='t'):
                 copy_matrix_x[x][y]='x'
             else:
-                copy_matrix_x[x][x]=matrix[x][y]
+                copy_matrix_x[x][y]=matrix[x][y]
 
     for x in xrange(3):
         for y in xrange(3):
             if(matrix[x][y]=='t'):
                 copy_matrix_o[x][y]='o'
             else:
-                copy_matrix_o[x][x]=matrix[x][y]
+                copy_matrix_o[x][y]=matrix[x][y]
 
     flag=0
 
