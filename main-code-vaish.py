@@ -29,7 +29,7 @@ def check_win_main(matrix):
     elif(check_winner(copy_matrix_x)=='x'):
         return 'x'
     
-    elif:
+    elif(True):
         flag=0
 
         for x in xrange(3):
@@ -41,8 +41,7 @@ def check_win_main(matrix):
         if(flag==0):
             return 't'
 
-    else:
-        return 's'
+    return 's'
     
 
 def check_winner(matrix):
