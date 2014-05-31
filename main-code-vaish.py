@@ -9,14 +9,14 @@ def check_win_main(matrix):
     for x in xrange(3):
         for y in xrange(3):
             if(matrix[x][y]=='t'):
-                copy_matrix_x[x][y]='x'
+                copy_matrix_x[x][y]='s'
             else:
                 copy_matrix_x[x][y]=matrix[x][y]
 
     for x in xrange(3):
         for y in xrange(3):
             if(matrix[x][y]=='t'):
-                copy_matrix_o[x][y]='o'
+                copy_matrix_o[x][y]='s'
             else:
                 copy_matrix_o[x][y]=matrix[x][y]
 
@@ -31,8 +31,8 @@ def check_win_main(matrix):
     if(flag==0):
         return 't'
 
-    if((check_winner(copy_matrix_o)=='o') and (check_winner(copy_matrix_x)=='x')):
-        return 's'
+#    if((check_winner(copy_matrix_o)=='o') and (check_winner(copy_matrix_x)=='x')):
+#        return 's'
 
     elif(check_winner(copy_matrix_o)=='o'):
         return 'o'
