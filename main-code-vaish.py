@@ -20,25 +20,26 @@ def check_win_main(matrix):
             else:
                 copy_matrix_o[x][y]=matrix[x][y]
 
-    flag=0
-
-    for x in xrange(3):
-        for y in xrange(3):
-            if(matrix[x][y]=='s'):
-                flag=1
-                break;
-
-    if(flag==0):
-        return 't'
-
 #    if((check_winner(copy_matrix_o)=='o') and (check_winner(copy_matrix_x)=='x')):
 #        return 's'
 
-    elif(check_winner(copy_matrix_o)=='o'):
+    if(check_winner(copy_matrix_o)=='o'):
         return 'o'
 
     elif(check_winner(copy_matrix_x)=='x'):
         return 'x'
+    
+    elif:
+        flag=0
+
+        for x in xrange(3):
+            for y in xrange(3):
+                if(matrix[x][y]=='s'):
+                    flag=1
+                    break;
+
+        if(flag==0):
+            return 't'
 
     else:
         return 's'
