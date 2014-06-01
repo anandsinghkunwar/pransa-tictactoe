@@ -1,0 +1,7 @@
+The simplest idea is that we can play:
+
+a greedy noob-tictactoe bot who makes the smartest move for the current grid with no regard to anything else(Maybe we will have to see that he doesn't make some huge mistake) in the beginning.
+
+monte carlo bot in the intermediate stages.
+
+perfect pruning bot towards the end.
