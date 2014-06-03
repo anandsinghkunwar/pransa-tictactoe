@@ -73,13 +73,15 @@ def check_winner(matrix):
 #Monte Carlo
 
 def random_moves(matrix,main_matrix,firstmove):
-    print matrix                                #Debugging the call-by-value vs call-by-reference
+
+   # print firstmove
 
     matrix[firstmove[0]][firstmove[1]][firstmove[2]][firstmove[3]]='o'
     
     if(check_winner(matrix[firstmove[0]][firstmove[1]])=='o'):
         main_matrix[firstmove[0]][firstmove[1]]='o'
         if(check_win_main(main_matrix)=='o'):
+        #    print 'fo'
             return 'o'
 
     if(main_matrix[firstmove[2]][firstmove[3]]!='s'):
@@ -96,28 +98,38 @@ def random_moves(matrix,main_matrix,firstmove):
         if(iplay==-1 and jplay==-1):
             iplay=random.randint(0,2)
             jplay=random.randint(0,2)
-            xrand=random.randint(0,2)
-            yrand=random.randint(0,2)
-            while(matrix[iplay][jplay][xrand][yrand]!='s'):
+            while(main_matrix[iplay][jplay]!='s'):
                 iplay=random.randint(0,2)
                 jplay=random.randint(0,2)
-                xrand=random.randint(0,2)
-                yrand=random.randint(0,2)
+        #        print '$'
                 
-        else:
+        xrand=random.randint(0,2)
+        yrand=random.randint(0,2)
+        while(matrix[iplay][jplay][xrand][yrand]!='s'):
             xrand=random.randint(0,2)
             yrand=random.randint(0,2)
-            while(matrix[iplay][jplay][xrand][yrand]!='s'):
-                xrand=random.randint(0,2)
-                yrand=random.randint(0,2)
+         #   print '%'
+
+       # print 'xplay'
+      #  print [iplay,jplay,xrand,yrand]                 #debugging
 
         matrix[iplay][jplay][xrand][yrand]='x'
+
         if(check_winner(matrix[iplay][jplay])=='x'):
             main_matrix[iplay][jplay]='x'
             if(check_win_main(main_matrix)=='x'):
+         #       print 'x'                               #debuggging
                 return 'x'
 
-# Dividing line between first and second move
+            elif(check_win_main(main_matrix)=='t'):
+        #        print 't'                           #debuggging
+                return 't'
+
+        elif(check_winner(matrix[iplay][jplay])=='t'):
+            main_matrix[iplay][jplay]='t'
+            if(check_win_main(main_matrix)=='t'):
+       #         print 't'                           #debuggging
+                return 't'
 
         if(main_matrix[xrand][yrand]!='s'):
             iplay=-1
@@ -127,29 +139,45 @@ def random_moves(matrix,main_matrix,firstmove):
             iplay=xrand
             jplay=yrand
 
+# Dividing line between first and second move
+
         if(iplay==-1 and jplay==-1):
             iplay=random.randint(0,2)
             jplay=random.randint(0,2)
-            xrand=random.randint(0,2)
-            yrand=random.randint(0,2)
-            while(matrix[iplay][jplay][xrand][yrand]!='s'):
+            while(main_matrix[iplay][jplay]!='s'):
                 iplay=random.randint(0,2)
                 jplay=random.randint(0,2)
-                xrand=random.randint(0,2)
-                yrand=random.randint(0,2)
+         #       print '$'
                 
-        else:
+        xrand=random.randint(0,2)
+        yrand=random.randint(0,2)
+        while(matrix[iplay][jplay][xrand][yrand]!='s'):
             xrand=random.randint(0,2)
             yrand=random.randint(0,2)
-            while(matrix[iplay][jplay][xrand][yrand]!='s'):
-                xrand=random.randint(0,2)
-                yrand=random.randint(0,2)
+        #    print '%'
+
+                
+    #    print 'oplay'
+     #   print [iplay,jplay,xrand,yrand]             #debuggoing 
 
         matrix[iplay][jplay][xrand][yrand]='o'
+
         if(check_winner(matrix[iplay][jplay])=='o'):
             main_matrix[iplay][jplay]='o'
             if(check_win_main(main_matrix)=='o'):
+  #              print 'o'                           #debuggging
                 return 'o'
+
+            elif(check_win_main(main_matrix)=='t'):
+ #               print 't'                           #debuggging
+                return 't'
+
+        elif(check_winner(matrix[iplay][jplay])=='t'):
+            main_matrix[iplay][jplay]='t'
+            if(check_win_main(main_matrix)=='t'):
+#                print 't'                           #debuggging
+                return 't'
+            
 
         if(main_matrix[xrand][yrand]!='s'):
             iplay=-1
@@ -182,14 +210,15 @@ def monte_carlo(matrix,main_matrix,iplay,jplay):
     bestpos=[-1,-1,-1,-1]
     
     for currpos in positions:
-        timepermove=5.0/len(positions)
-
+#        print currpos
+        timepermove=1.0/len(positions)                      #currently at 1 second.
+        
         noofwins=0
         nooflosses=0
         noofties=0
 
-        cp_matrix=[[[['s']*3]*3]*3]*3
-        cp_main_matrix=[['s']*3]*3
+        cp_matrix=[[[['s','s','s'],['s','s','s'],['s','s','s']] for temp in xrange(3)] for temp in xrange(3)]
+        cp_main_matrix=[['s','s','s'],['s','s','s'],['s','s','s']]
 
         init_time=time.time()
         while (time.time()-init_time<timepermove):
@@ -214,14 +243,19 @@ def monte_carlo(matrix,main_matrix,iplay,jplay):
 
             else:
                 noofties+=1
-            
-        prob=(noofwins*1.0)/(noofwins+nooflosses+noofties)
+
+        print noofwins
+        print nooflosses
+        print noofties
+        prob=(noofwins)*1.0/(noofwins+nooflosses+noofties)
 
         print noofwins+nooflosses+noofties                      #For improving the code. Trying to see how many times it can run.
+        print prob
         
         if (prob>best_prob):
             best_prob=prob
             bestpos=currpos
+            
 
     return bestpos                                               #Again I am not sure about call_by_reference and call_by_pos
 
@@ -289,8 +323,6 @@ while True:
                                             matrix[x][y][i][j]='x'
                                             iprev=i
                                             jprev=j
-                                            if(player>20):
-						print monte_carlo(matrix,main_matrix,iprev,jprev)
                                             
                                         else:
                                             screen.blit(OSMALLimageObject,coord_of_cells[x][y][i][j])
@@ -306,8 +338,6 @@ while True:
                                         matrix[x][y][i][j]='x'
                                         iprev=i
                                         jprev=j
-					if(player>20):
-                                            print monte_carlo(matrix,main_matrix,iprev,jprev)
                                         
                                     else:
                                         screen.blit(OSMALLimageObject,coord_of_cells[x][y][i][j])
@@ -345,6 +375,9 @@ while True:
                                 if(main_matrix[iprev][jprev]!='s'):
                                     iprev=-1
                                     jprev=-1
+
+                                if(player>20):
+                                    print monte_carlo(matrix,main_matrix,iprev,jprev)
                                 
 
     pygame.display.update()
