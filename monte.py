@@ -289,7 +289,8 @@ while True:
                                             matrix[x][y][i][j]='x'
                                             iprev=i
                                             jprev=j
-                                            print monte_carlo(matrix,main_matrix,iprev,jprev)
+                                            if(player>20):
+						print monte_carlo(matrix,main_matrix,iprev,jprev)
                                             
                                         else:
                                             screen.blit(OSMALLimageObject,coord_of_cells[x][y][i][j])
@@ -305,7 +306,8 @@ while True:
                                         matrix[x][y][i][j]='x'
                                         iprev=i
                                         jprev=j
-                                        print monte_carlo(matrix,main_matrix,iprev,jprev)
+					if(player>20):
+                                            print monte_carlo(matrix,main_matrix,iprev,jprev)
                                         
                                     else:
                                         screen.blit(OSMALLimageObject,coord_of_cells[x][y][i][j])
