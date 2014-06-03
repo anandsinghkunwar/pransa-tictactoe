@@ -122,19 +122,20 @@ while True:
                                     pass
 
                                 elif((iprev==-1)and(jprev==-1)):
-                                    if(player%2==1):
-                                        screen.blit(XSMALLimageObject,coord_of_cells[x][y][i][j])
-                                        player+=1
-                                        matrix[x][y][i][j]='x'
-                                        iprev=i
-                                        jprev=j
+                                    if(main_matrix[x][y]=='s'):
+                                        if(player%2==1):
+                                            screen.blit(XSMALLimageObject,coord_of_cells[x][y][i][j])
+                                            player+=1
+                                            matrix[x][y][i][j]='x'
+                                            iprev=i
+                                            jprev=j
 
-                                    else:
-                                        screen.blit(OSMALLimageObject,coord_of_cells[x][y][i][j])
-                                        player+=1
-                                        matrix[x][y][i][j]='o'
-                                        iprev=i
-                                        jprev=j
+                                        else:
+                                            screen.blit(OSMALLimageObject,coord_of_cells[x][y][i][j])
+                                            player+=1
+                                            matrix[x][y][i][j]='o'
+                                            iprev=i
+                                            jprev=j
                                 
                                 elif((x==iprev)and(y==jprev)):
                                     if(player%2==1):
