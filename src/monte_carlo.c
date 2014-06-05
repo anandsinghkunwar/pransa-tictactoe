@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<time.h>
+#include<stdlib.h>
 
 char check_winner(char matrix[][3])
 {
@@ -46,7 +47,7 @@ char check_win_main(char main_matrix[][3])
 		{
 			if(main_matrix[x][y]=='t')
 			{
-				copy_main=[x][y]='s'
+				copy_main[x][y]='s';
 			}
 
 			else
@@ -57,9 +58,13 @@ char check_win_main(char main_matrix[][3])
 	}
 
 	if(check_winner(copy_main)=='o')
+	{
 		return 'o';
+	}
 	if(check_winner(copy_main)=='x')
+	{
 		return 'x';
+	}
 
 	int flag=0;
 
@@ -67,7 +72,7 @@ char check_win_main(char main_matrix[][3])
 	{
 		for(y=0;y<3;y++)
 		{
-			if(matrix[x][y]=='s')
+			if(main_matrix[x][y]=='s')
 			{
 				flag=1;
 				break;
@@ -76,12 +81,14 @@ char check_win_main(char main_matrix[][3])
 	}
 
 	if(flag==0)
+	{
 		return 't';
+	}
 
 	return 's';
 }
 
-char random_moves(char matrix[][3][3][3],char main_matrix[][3],firstmove[])
+char random_moves(char matrix[][3][3][3],char main_matrix[][3],int firstmove[])
 {
 	int iplay=-1;
 	int jplay=-1;
@@ -93,17 +100,23 @@ char random_moves(char matrix[][3][3][3],char main_matrix[][3],firstmove[])
 	{
 		main_matrix[firstmove[0]][firstmove[1]]='o';
 		if(check_win_main(main_matrix)=='o')
+		{
 			return 'o';
+		}
 		
 		else if(check_win_main(main_matrix)=='t')
-			return 't'
+		{
+			return 't';
+		}
 	}
 
 	else if(check_winner(matrix[firstmove[0]][firstmove[1]])=='t')
 	{
 		main_matrix[firstmove[0]][firstmove[1]]='t';
 		if(check_win_main(main_matrix)=='t')
-			return 't'
+		{
+			return 't';
+		}
 	}
 
 	if(main_matrix[firstmove[2]][firstmove[3]]!='s')
@@ -124,29 +137,42 @@ char random_moves(char matrix[][3][3][3],char main_matrix[][3],firstmove[])
 	{
 		if(iplay==-1 && jplay==-1)
 		{
-			//Randomisation
+			do
+			{
+				iplay=rand()%3;
+				jplay=rand()%3;
+			}
+			while(main_matrix[iplay][jplay]!='s');
 		}
 
-		else
+		do
 		{
-			//Randomistaion
+			xrand=rand()%3;
+			yrand=rand()%3;
 		}
+		while(matrix[iplay][jplay][xrand][yrand]!='s');
 
 		matrix[iplay][jplay][xrand][yrand]='x';
 		if(check_winner(matrix[iplay][jplay])=='x')
 		{
 			main_matrix[iplay][jplay]='x';
 			if(check_win_main(main_matrix)=='x')
+			{
 				return 'x';
+			}
 			else if(check_win_main(main_matrix)=='t')
-				return 't'
+			{
+				return 't';
+			}
 		}
 
 		else if(check_winner(matrix[iplay][jplay])=='t')
 		{
 			main_matrix[iplay][jplay]='t';
 			if(check_win_main(main_matrix)=='t')
-				return 't'
+			{
+				return 't';
+			}
 		}
 
 		if(main_matrix[xrand][yrand]!='s')
@@ -165,29 +191,42 @@ char random_moves(char matrix[][3][3][3],char main_matrix[][3],firstmove[])
 
 		if(iplay==-1 && jplay==-1)
 		{
-			//Randomisation
+			do
+			{
+				iplay=rand()%3;
+				jplay=rand()%3;
+			}
+			while(main_matrix[iplay][jplay]!='s');
 		}
 
-		else
+		do
 		{
-			//Randomistaion
+			xrand=rand()%3;
+			yrand=rand()%3;
 		}
+		while(matrix[iplay][jplay][xrand][yrand]!='s');
 
 		matrix[iplay][jplay][xrand][yrand]='o';
 		if(check_winner(matrix[iplay][jplay])=='o')
 		{
 			main_matrix[iplay][jplay]='o';
 			if(check_win_main(main_matrix)=='o')
+			{
 				return 'o';
+			}
 			else if(check_win_main(main_matrix)=='t')
-				return 't'
+			{
+				return 't';
+			}
 		}
 
 		else if(check_winner(matrix[iplay][jplay])=='t')
 		{
 			main_matrix[iplay][jplay]='t';
 			if(check_win_main(main_matrix)=='t')
-				return 't'
+			{
+				return 't';
+			}
 		}
 
 		if(main_matrix[xrand][yrand]!='s')
@@ -222,6 +261,9 @@ int main()
 	fscanf(fpinput,"%d %d",&iplay,&jplay);
 	fscanf(fpinput,"%c",&temp);
 
+	//scanf("%d %d",&iplay,&jplay);
+	//scanf("%c",&temp);
+
 	int i,j,k,l;
 
 	for(i=0;i<3;i++)
@@ -232,10 +274,15 @@ int main()
 			{
 				for(l=0;l<3;l++)
 				{
-					fscanf("%c",&matrix[i][k][j][l]);
+					fscanf(fpinput,"%c",&matrix[i][k][j][l]);
+					//scanf("%c",&matrix[i][k][j][l]);
+					if(matrix[i][k][j][l]=='X')matrix[i][k][j][l]='x';
+                                        else if(matrix[i][k][j][l]=='O')matrix[i][k][j][l]='o';
+                                        else if(matrix[i][k][j][l]=='-')matrix[i][k][j][l]='s';
 				}
 			}
-			fscanf("%c",&temp);
+			fscanf(fpinput,"%c",&temp);
+			//scanf("%c",&temp);
 		}
 	}
 
@@ -243,7 +290,7 @@ int main()
 	{
 		for(j=0;j<3;j++)
 		{
-			main_matrix[i][j]=check_win(matrix[i][j]);
+			main_matrix[i][j]=check_winner(matrix[i][j]);
 		}
 	}
 
@@ -259,9 +306,9 @@ int main()
 				if(matrix[iplay][jplay][i][j]=='s')
 				{
 					positions[noofpositions][0]=iplay;
-                                        positions[noofpositions][0]=jplay;
-                                        positions[noofpositions][0]=i;
-                                        positions[noofpositions][0]=j;
+                                        positions[noofpositions][1]=jplay;
+                                        positions[noofpositions][2]=i;
+                                        positions[noofpositions][3]=j;
 					noofpositions++;
 				}
 			}
@@ -301,17 +348,19 @@ int main()
 	char copy_matrix[3][3][3][3];
 	char copy_main[3][3];
 	int currpos;
+	
+	srand(time(NULL));
+	
+	double timepermove=5.0/noofpositions;
 
 	for(currpos=0;currpos<noofpositions;currpos++)
 	{
-		double timepermove=5.0/noofpositions;
-
 		int noofwins=0,nooflosses=0,noofties=0;
 
-		time_t currtime,inittime;
-		time(&inittime);
+		struct timeval currtime,inittime;
+		gettimeofday(&inittime,NULL);
 
-		while(difftime(time(&currtime),inittime)<timepermove)
+		while(gettimeofday(&currtime,NULL),(double)((currtime.tv_sec-inittime.tv_sec)+(currtime.tv_usec-inittime.tv_usec)*1.0/1000000)<timepermove)
 		{
 			for(i=0;i<3;i++)
 			{
@@ -335,7 +384,6 @@ int main()
 					copy_main[i][j]=main_matrix[i][j];
 				}
 			}
-
 			temp=random_moves(copy_matrix,copy_main,positions[currpos]);
 
 			if(temp=='o')
@@ -348,8 +396,6 @@ int main()
 		
 		double prob=(1.0*noofwins)/(noofwins+nooflosses+noofties);	
 
-		printf("noofgames: %d %d %d=%d",noofwins,nooflosses,noofties,noofwins+nooflosses+noofties);	
-
 		if(prob>best_prob)
 		{
 			best_prob=prob;
@@ -360,7 +406,8 @@ int main()
 		}	
 	}
 
-	fprintf(foutput,"%d %d %d %d\n",bestpos[0],bestpos[1],bestpos[2],bestpos[3]);
+	fprintf(fpoutput,"%d %d %d %d\n",best_pos[0],best_pos[1],best_pos[2],best_pos[3]);
+        //printf("%d %d %d %d\n",best_pos[0],best_pos[1],best_pos[2],best_pos[3]);
 
 	fclose(fpinput);
 	fclose(fpoutput);
