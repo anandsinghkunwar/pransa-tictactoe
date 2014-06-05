@@ -376,7 +376,7 @@ while True:
                                     iprev=-1
                                     jprev=-1
 
-                                if(player>20):
+                                if(player>0):
                                     print monte_carlo(matrix,main_matrix,iprev,jprev)
                                 
 
