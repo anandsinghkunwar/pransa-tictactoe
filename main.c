@@ -2,7 +2,7 @@
 struct Node
 	{
 		int val;
-		struct Node * child[81];
+		struct Node * child[3][3][3][3];
 	}root, present, next, temp;
 int minimax();
 int minmove();
@@ -96,32 +96,56 @@ char check_win_main(char main_matrix[][3])
         return 's';
 }
 
-int minmove()
-	{
-		int i,min,move;
-		for(i=0;i<81;i++)
-			{
-				next=present->child[i];
-				if (next->val<min)
-					{
-						min=next->val;
-						move=i;
-					}
-			}
-		return move;
-	}
-
-int maxmove()
+int mixmove(int matrix[3][3][3][3])
         {
-                int i,max,move;
-                for(i=0;i<81;i++)
+                int i,j,k,l,min=32767,move;
+                for(i=0;i<3;i++)
                         {
-                                next=present->child[i];
-                                if (next->val>max)
-                                        {
-                                                max=next->val;
-                                                move=i;
-                                        }
+                        for(j=0;j<3;i++)
+                                {
+                                        for(k=0;k<3;i++)
+                                                {
+                                                        for(l=0;l<3;i++)
+                                                                {
+                                                                        if(matrix[i][j][k][l]!='s')
+                                                                                continue;
+                                                                        next=present->child[i][j][k][l];
+                                                                        if (next->val<min)
+                                                                                {
+                                                                                        min=next->val;
+                                                                                        move=i*1000+j*100+k*10+l;
+                                                                                }
+                                                                }
+                                                }
+                                }
+                        }
+                return move;
+        }
+
+
+int maxmove(int matrix[3][3][3][3])
+        {
+                int i,j,k,l,max=-32767,move;
+                for(i=0;i<3;i++)
+                        {
+			for(j=0;j<3;i++)
+                        	{
+					for(k=0;k<3;i++)
+                        			{
+							for(l=0;l<3;i++)
+                        					{
+
+                                					if(matrix[i][j][k][l]!='s')
+										continue;
+									next=present->child[i][j][k][l];
+                                					if (next->val>max)
+                                        					{
+                                                					max=next->val;
+                                               						move=i*1000+j*100+k*10+l;
+                                        					}
+								}
+						}
+				}
                         }
                 return move;
         }
