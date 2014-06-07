@@ -96,7 +96,7 @@ char check_win_main(char main_matrix[][3])
         return 's';
 }
 
-int mixmove(int matrix[3][3][3][3])
+int minmove(int matrix[3][3][3][3])
         {
                 int i,j,k,l,min=32767,move;
                 for(i=0;i<3;i++)
@@ -149,6 +149,22 @@ int maxmove(int matrix[3][3][3][3])
                         }
                 return move;
         }
+int minimax(char turn,matrix[3][3][3][3])
+	{
+		if (checkwin()=='x')
+			return 1;
+		else
+			if (checkwin()=='o')
+				return -1;
+			else
+				{
+					if(turn == 'x')
+						return minimax('o',max);
+					else
+						return minimax('x',min);
+					
+				}
+	}
 int main()
 	{
 		int a[3][3][3][3];
