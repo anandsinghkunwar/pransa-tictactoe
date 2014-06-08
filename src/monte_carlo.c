@@ -246,8 +246,8 @@ char random_moves(char matrix[][3][3][3],char main_matrix[][3],int firstmove[])
 
 int main()
 {
-	char inputloc[]="../data/matrixforai.txt";
-	char outputloc[]="../data/aimove.txt";
+	char inputloc[]="./data/matrixforai.txt";
+	char outputloc[]="./data/aimove.txt";
 
 	FILE *fpinput=fopen(inputloc,"r");
 	FILE *fpoutput=fopen(outputloc,"w+");
