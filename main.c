@@ -9,6 +9,49 @@ int minmove();
 int maxmove();
 char check_winner(char [][3]);
 char check_win_main(char [][3]);
+int * check_empty(char [3][3][3][3], int, int);
+
+int * check_empty(char matrix[3][3][3][3], int a, int b)
+        {
+                int moves[81],i,j,k,l,count=0;
+                if(a==3&&b==3)
+                {
+                for(i=0;i<3;i++)
+                        {
+                        for(j=0;j<3;i++)
+                                {
+                                        for(k=0;k<3;i++)
+                                                {
+                                                        for(l=0;l<3;i++)
+                                                                {
+
+                                                                        if(matrix[i][j][k][l]=='s')
+                                                                                {
+                                                                                        moves[count]=i*1000+j*100+k*10+l;
+                                                                                        count++;
+                                                                                }
+                                                                }
+                                                }
+                                }
+                        }
+                moves[count]=-1;
+                }
+                else
+                {       for(i=0;i<3;i++)
+                        {
+                        for(j=0;j<3;i++)
+                                {
+                                        if(matrix[a][b][i][j]=='s')
+                                        {
+                                                moves[count]=a*1000+b*100+i*10+j;
+                                                count++;
+                                        }
+
+                                }
+                        }
+                }
+                return moves;
+        }
 
 char check_winner(char matrix[][3])
 {
