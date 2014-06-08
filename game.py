@@ -104,6 +104,8 @@ jprev=-1
 
 screen.blit(BackgroundimageObject,(0,0))
 
+call(["gcc","./src/monte_carlo.c","-o","./playmonte"])		#Compiles the program for different systems
+
 while True:
 
     for event in pygame.event.get():
@@ -205,7 +207,7 @@ while True:
                                 pygame.display.update() # Required?
 
                                 print "Please wait"                 #Debugging
-                                call(["./src/playmonte"])
+                                call(["./playmonte"])
 
                                 fin=open("./data/aimove.txt","r")
 
@@ -242,7 +244,7 @@ while True:
                                             print "The winner is "+ check_win_main(main_matrix)
                                         else:
                                             print "The game is a tie"
-
+					
                                         pygame.quit()
                                         sys.exit()
 
