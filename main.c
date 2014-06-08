@@ -1,10 +1,12 @@
 #include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
 struct Node
 	{
 		int val;
 		struct Node * child[3][3][3][3];
-	}root, present, next, temp;
-int minimax();
+	}*root, *present, *next, *temp;
+int minimax(struct Node *,char,char [3][3][3][3]);
 int minmove();
 int maxmove();
 char check_winner(char [][3]);
@@ -13,8 +15,9 @@ int * check_empty(char [3][3][3][3], int, int);
 
 int * check_empty(char matrix[3][3][3][3], int a, int b)
         {
-                int moves[81],i,j,k,l,count=0;
-                if(a==3&&b==3)
+                int i,j,k,l,count=0;
+                int * moves = (int *) malloc(sizeof(int)*81);
+		if(a==3&&b==3)
                 {
                 for(i=0;i<3;i++)
                         {
@@ -139,7 +142,7 @@ char check_win_main(char main_matrix[][3])
         return 's';
 }
 
-int minmove(int matrix[3][3][3][3])
+int minmove(char matrix[3][3][3][3])
         {
                 int i,j,k,l,min=32767,move;
                 for(i=0;i<3;i++)
@@ -166,7 +169,7 @@ int minmove(int matrix[3][3][3][3])
         }
 
 
-int maxmove(int matrix[3][3][3][3])
+int maxmove(char matrix[3][3][3][3])
         {
                 int i,j,k,l,max=-32767,move;
                 for(i=0;i<3;i++)
@@ -192,25 +195,52 @@ int maxmove(int matrix[3][3][3][3])
                         }
                 return move;
         }
-int minimax(char turn,matrix[3][3][3][3])
+int minimax(struct Node *current,char turn,char matrix[3][3][3][3])
 	{
+		int i,*empty;
+		char copy[3][3][3][3];
+		for(i=0;i<81;i++)
+			current->child[i]=NULL;
 		if (checkwin()=='x')
-			return 1;
+			{
+				current->val=1;
+				return 1;
+			}
 		else
 			if (checkwin()=='o')
-				return -1;
+				{
+					current->val=-1;
+					return -1;
+				}
 			else
 				{
-					if(turn == 'x')
-						return minimax('o',max);
-					else
-						return minimax('x',min);
 					
+					empty=check_empty(matrix,a,b);
+					for(i=0;empty[i]i!=-1&&i<81;i++)
+						{
+							memcpy(copy,matrix,sizeof(matrix));
+							current->child[i]=(struct Node *) malloc(sizeof(struct Node));
+							if(turn == 'x')
+								{
+								return minimax(current->child[i],'o',matrix);
+								}
+							else
+								{
+								return minimax(current->child[i],'x',matrix);
+								}
+						}
 				}
 	}
 int main()
 	{
-		int a[3][3][3][3];
+		int i,j,k,l,x,y,matrix[3][3][3][3];
+		scanf("%d %d",&x,&y);
+		for(i=0;i<3;i++)
+			for(j=0;j<3;i++)
+				for(k=0;k<3;i++)
+					for(l=0;l<3;i++)
+                                        	scanf("%c",&matrix[i][j][k][l]);                  
+
 		printf("Trial");
 		return 0;
 	}
