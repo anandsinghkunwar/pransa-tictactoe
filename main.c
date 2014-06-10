@@ -181,6 +181,7 @@ int maxmove(struct Node * present)
 int minimax(struct Node *current,char turn,char matrix[3][3][3][3],char main_matrix[3][3],char x,char y)
 	{
 		int i,*empty,a,b,c,d;
+		empty = NULL;
 		char copy[3][3][3][3];
 		for(i=0;i<81;i++)
 			current->child[i]=NULL;
@@ -215,34 +216,35 @@ int minimax(struct Node *current,char turn,char matrix[3][3][3][3],char main_mat
 							return 0;
 						}
 				}
-			else
-				{
-					
-					empty=check_empty(matrix,main_matrix,a,b);
-					for(i=0;empty[i]!=-1&&i<81;i++)
-						{
-							a=empty[i]/1000;
-							b=empty[i]/100 - a*10;
-							c=empty[i]/10 - a*100 - b*10;
-							d=empty[i]-a*1000 - b*100 - c*10;
-							memcpy(copy,matrix,sizeof(matrix));
-							current->child[i]=(struct Node *) malloc(sizeof(struct Node));
-							if(turn == 'x')
-								{
-								copy[a][b][c][d]='x';
-								return minimax(current->child[i],'o',copy,main_matrix,a,b);
-								}
-							else
-								{
-								copy[a][b][c][d]='o';
-								return minimax(current->child[i],'x',copy,main_matrix,a,b);
-								}
-						}
-					if(turn=='x')
-						return maxmove(current);
+	
+						
+		empty=check_empty(matrix,main_matrix,a,b);
+		for(i=0;empty[i]!=-1&&i<81;i++)
+			{
+				a=empty[i]/1000;
+				b=empty[i]/100 - a*10;
+				c=empty[i]/10 - a*100 - b*10;
+				d=empty[i]-a*1000 - b*100 - c*10;
+				memcpy(copy,matrix,sizeof(matrix));
+				current->child[i]=(struct Node *) malloc(sizeof(struct Node));
+				if(turn == 'x')
+					{
+					copy[a][b][c][d]='x';
+					return minimax(current->child[i],'o',copy,main_matrix,a,b);
+					}
 					else
-						return minmove(current);
-				}
+					{
+					copy[a][b][c][d]='o';
+					return minimax(current->child[i],'x',copy,main_matrix,a,b);
+					}
+			}
+		free(empty);
+		empty=NULL;
+		if(turn=='x')
+			return maxmove(current);
+		else
+			return minmove(current);
+			
 	}
 int main()
 	{
@@ -288,6 +290,7 @@ int main()
 	b=move/100 - a*10;
 	c=move/10 - a*100 - b*10;
 	d=move-a*1000 - b*100 - c*10;
+	printf("%d %d %d %d",a,b,c,d);
         return 0;
 
 	}
