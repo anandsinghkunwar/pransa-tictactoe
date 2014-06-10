@@ -4,6 +4,7 @@
 struct Node
 	{
 		int val;
+		char depth;
 		struct Node * child[81];
 	};
 int minimax(struct Node *,char,char [3][3][3][3],char [3][3],char,char);
@@ -162,25 +163,38 @@ int minmove(struct Node * present)
 
 int maxmove(struct Node * present)
         {
-                int move,i,max=-2,maxi;
+                int move,i,max=-2,maxi,count,maxdepth,mindepth;
+		maxdepth=-1;
+		mindepth=82;
                 struct Node *next;
-
                 for(i=0;present->child[i]!=NULL&&i<81;i++)
                 {
                         next=present->child[i];
-                        if(next->val>max)
+                        if(next->val>=max)
                         {
-                                maxi=i;
-                                max=next->val;
-                        }
+                                if(next->val==1&&next->depth<mindepth)
+				{
+					maxi=i;
+                                	max=next->val;
+					mindepth=next->depth;
+                        	}
+				else
+					if(next->val!=1&&next->depth>maxdepth)
+					{
+						maxi=i;
+						max=next->val;
+						maxdepth=next->depth;
+					}
+			}
                 }
+
 
                 return maxi;
         }
 
 int minimax(struct Node *current,char turn,char matrix[3][3][3][3],char main_matrix[3][3],char x,char y)
 	{
-		int i,*empty,a,b,c,d;
+		int i,*empty,a,b,c,d,k,move;
 		empty = NULL;
 		char copy[3][3][3][3];
 		for(i=0;i<81;i++)
@@ -207,12 +221,14 @@ int minimax(struct Node *current,char turn,char matrix[3][3][3][3],char main_mat
 					if(check_win_main(main_matrix)=='o')
 						{
 							current->val=-1;
+							current->depth=0;
 							return -1;
 						}
 					else
 						if(check_win_main(main_matrix)=='t')
 						{
 							current->val=0;
+							current->depth=0;
 							return 0;
 						}
 				}
@@ -238,12 +254,16 @@ int minimax(struct Node *current,char turn,char matrix[3][3][3][3],char main_mat
 					return minimax(current->child[i],'x',copy,main_matrix,a,b);
 					}
 			}
+	
+		if(turn=='x')
+			k=maxmove(current);
+		else
+			k=minmove(current);
+		current->depth=(current->child[k])->depth + 1;
+		move=empty[k];
 		free(empty);
 		empty=NULL;
-		if(turn=='x')
-			return maxmove(current);
-		else
-			return minmove(current);
+		return move;
 			
 	}
 int main()
