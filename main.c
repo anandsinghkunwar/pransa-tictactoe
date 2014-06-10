@@ -17,7 +17,7 @@ int * check_empty(char [3][3][3][3], char [][3],int, int);
 int * check_empty(char matrix[3][3][3][3],char main_matrix[3][3], int a, int b)
         {
                 int i,j,k,l,count=0;
-                int * moves = (int *) malloc(sizeof(int)*81);
+                static int * moves = (int *) malloc(sizeof(int)*81);
 		if(a==3&&b==3)
                 {
                 for(i=0;i<3;i++)
@@ -203,13 +203,16 @@ int minimax(struct Node *current,char turn,char matrix[3][3][3][3],char main_mat
 			{
 				main_matrix[x][y]='x';
 				if(check_win_main(main_matrix)=='x')
-					{current->val=1;
-					return 1;
+					{
+						current->val=1;
+						current->depth=0;
+						return 1;
 					}
 				else
 					if(check_win_main(main_matrix)=='t')
 					{
 						current->val=0;
+						current->depth=0;
 						return 0;
 					}
 
@@ -219,6 +222,7 @@ int minimax(struct Node *current,char turn,char matrix[3][3][3][3],char main_mat
 				{
 					main_matrix[x][y]=='o';
 					if(check_win_main(main_matrix)=='o')
+
 						{
 							current->val=-1;
 							current->depth=0;
@@ -233,8 +237,9 @@ int minimax(struct Node *current,char turn,char matrix[3][3][3][3],char main_mat
 						}
 				}
 	
-						
-		empty=check_empty(matrix,main_matrix,a,b);
+		printf("#\n");				
+		empty=check_empty(matrix,main_matrix,x,y);
+		printf("#\n");
 		for(i=0;empty[i]!=-1&&i<81;i++)
 			{
 				a=empty[i]/1000;
@@ -296,7 +301,6 @@ int main()
                         scanf("%c",&temp);
                 }
         }
-
         for (i=0;i<3;i++)
         {
                 for(j=0;j<3;j++)
@@ -314,4 +318,3 @@ int main()
         return 0;
 
 	}
-
