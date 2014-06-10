@@ -7,26 +7,37 @@ struct Node
 		char depth;
 		struct Node * child[81];
 	};
-int minimax(struct Node *,char,char [3][3][3][3],char [3][3],char,char);
+int *moves;
+int minimax(struct Node *,char,char [3][3][3][3],char [3][3],char,char,char,char);
 int minmove(struct Node *);
 int maxmove(struct Node *);
 char check_winner(char [][3]);
 char check_win_main(char [][3]);
 int * check_empty(char [3][3][3][3], char [][3],int, int);
+void printmatrix2d(char matrix[3][3])
+	{
+		int i,j;
+		for(i=0;i<3;i++)
+			{
+			for(j=0;j<3;j++)
+			printf("%c",matrix[i][j]);
+			printf("\n");
+			}
+	}
 
 int * check_empty(char matrix[3][3][3][3],char main_matrix[3][3], int a, int b)
         {
                 int i,j,k,l,count=0;
-                static int * moves = (int *) malloc(sizeof(int)*81);
+                moves = (int *) malloc(sizeof(int)*81);
 		if(a==3&&b==3)
                 {
                 for(i=0;i<3;i++)
                         {
-                        for(j=0;j<3;i++)
+                        for(j=0;j<3;j++)
                                 {
-                                        for(k=0;k<3;i++)
+                                        for(k=0;k<3;k++)
                                                 {
-                                                        for(l=0;l<3;i++)
+                                                        for(l=0;l<3;l++)
                                                                 {
 
                                                                         if(matrix[i][j][k][l]=='s'&&main_matrix[i][j]=='s')
@@ -38,12 +49,12 @@ int * check_empty(char matrix[3][3][3][3],char main_matrix[3][3], int a, int b)
                                                 }
                                 }
                         }
-                moves[count]=-1;
+                
                 }
                 else
                 {       for(i=0;i<3;i++)
                         {
-                        for(j=0;j<3;i++)
+                        for(j=0;j<3;j++)
                                 {
                                         if(matrix[a][b][i][j]=='s')
                                         {
@@ -53,7 +64,9 @@ int * check_empty(char matrix[3][3][3][3],char main_matrix[3][3], int a, int b)
 
                                 }
                         }
+		
                 }
+		moves[count]=-1;
                 return moves;
         }
 
@@ -192,16 +205,17 @@ int maxmove(struct Node * present)
                 return maxi;
         }
 
-int minimax(struct Node *current,char turn,char matrix[3][3][3][3],char main_matrix[3][3],char x,char y)
+int minimax(struct Node *current,char turn,char matrix[3][3][3][3],char main_matrix[3][3],char x,char y,char w, char z)
 	{
-		int i,*empty,a,b,c,d,k,move;
+		int p,i,j,f,l,*empty,k,move;
+		char a,b,c,d;
 		empty = NULL;
 		char copy[3][3][3][3];
 		for(i=0;i<81;i++)
 			current->child[i]=NULL;
-		if (check_winner(matrix[x][y])=='x')
+		if (check_winner(matrix[w][z])=='x')
 			{
-				main_matrix[x][y]='x';
+				main_matrix[w][z]='x';
 				if(check_win_main(main_matrix)=='x')
 					{
 						current->val=1;
@@ -218,11 +232,12 @@ int minimax(struct Node *current,char turn,char matrix[3][3][3][3],char main_mat
 
 			}
 		else
-			if (check_winner(matrix[x][y])=='o')
+			if (check_winner(matrix[w][z])=='o')
 				{
-					main_matrix[x][y]=='o';
+					
+					main_matrix[w][z]='o';
+		//			printmatrix2d(main_matrix);
 					if(check_win_main(main_matrix)=='o')
-
 						{
 							current->val=-1;
 							current->depth=0;
@@ -237,29 +252,42 @@ int minimax(struct Node *current,char turn,char matrix[3][3][3][3],char main_mat
 						}
 				}
 	
-		printf("#\n");				
 		empty=check_empty(matrix,main_matrix,x,y);
-		printf("#\n");
+	//	printf("empty 0 = %d\n",empty[0]);
 		for(i=0;empty[i]!=-1&&i<81;i++)
 			{
+		//		printf("Inside Loop---%d\n",i);
 				a=empty[i]/1000;
 				b=empty[i]/100 - a*10;
 				c=empty[i]/10 - a*100 - b*10;
 				d=empty[i]-a*1000 - b*100 - c*10;
-				memcpy(copy,matrix,sizeof(matrix));
+				for(p=0;p<3;p++)
+                        	{
+                        	for(j=0;j<3;j++)
+                                {
+                                        for(f=0;f<3;f++)
+                                                {
+                                                        for(l=0;l<3;l++)
+                                                                {
+                                                                	copy[p][j][f][l]=matrix[p][j][f][l]; 
+                                                                }
+                                                }
+                                }
+                       		}
+                
+
 				current->child[i]=(struct Node *) malloc(sizeof(struct Node));
 				if(turn == 'x')
 					{
 					copy[a][b][c][d]='x';
-					return minimax(current->child[i],'o',copy,main_matrix,a,b);
+					minimax(current->child[i],'o',copy,main_matrix,c,d,a,b);
 					}
 					else
 					{
 					copy[a][b][c][d]='o';
-					return minimax(current->child[i],'x',copy,main_matrix,a,b);
+					minimax(current->child[i],'x',copy,main_matrix,c,d,a,b);
 					}
 			}
-	
 		if(turn=='x')
 			k=maxmove(current);
 		else
@@ -275,7 +303,6 @@ int main()
 	{
 	char matrix[3][3][3][3];
 	char main_matrix[3][3];
-
 	int iplay,jplay,turn,move;
 	char temp;
 	scanf("%c",&turn);
@@ -309,7 +336,7 @@ int main()
                 }
         }
 	struct Node *root= (struct Node *) malloc(sizeof(struct Node));
-	move=minimax(root,turn,matrix,main_matrix,iplay,jplay);
+	move=minimax(root,turn,matrix,main_matrix,iplay,jplay,1,1);
 	a=move/1000;
 	b=move/100 - a*10;
 	c=move/10 - a*100 - b*10;
