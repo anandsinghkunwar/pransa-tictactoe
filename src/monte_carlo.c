@@ -101,7 +101,7 @@ char random_moves(char matrix[][3][3][3],char main_matrix[][3],int firstmove[])
 		main_matrix[firstmove[0]][firstmove[1]]='o';
 		if(check_win_main(main_matrix)=='o')
 		{
-			return 'o';
+			return 'O';
 		}
 		
 		else if(check_win_main(main_matrix)=='t')
@@ -347,7 +347,7 @@ int main()
 
 	char copy_matrix[3][3][3][3];
 	char copy_main[3][3];
-	int currpos;
+	int currpos,flag=0;
 	
 	srand(time(NULL));
 	
@@ -387,6 +387,12 @@ int main()
 			temp=random_moves(copy_matrix,copy_main,positions[currpos]);
 			number++; 
 			
+			if(temp=='O')
+				{
+				noofwins++;
+				flag=1;
+				break;
+				}	
 			if(temp=='o')
 				noofwins+=1;
 			else if (temp=='x')
@@ -396,7 +402,8 @@ int main()
 		}
 		
 		double prob=(1.0*noofwins)/(noofwins+nooflosses+noofties);	
-
+		if(flag==1)
+			prob=2.0;
 		if(prob>best_prob)
 		{
 			best_prob=prob;
@@ -404,10 +411,13 @@ int main()
                         best_pos[1]=positions[currpos][1];
                         best_pos[2]=positions[currpos][2];
                         best_pos[3]=positions[currpos][3];
+			if(flag==1)
+				break;
 		}	
 	}
+	
 	sum/=number;
-	printf("%f",sum);
+	printf("%f",(flag==0)?(sum):(1.0));
 	fprintf(fpoutput,"%d %d %d %d\n",best_pos[0],best_pos[1],best_pos[2],best_pos[3]);
         //printf("%d %d %d %d\n",best_pos[0],best_pos[1],best_pos[2],best_pos[3]);
 
