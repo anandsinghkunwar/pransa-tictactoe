@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<time.h>
 #include<stdlib.h>
-
+float sum=0.0,number=0;
 char check_winner(char matrix[][3])
 {
 	if(matrix[0][0]==matrix[0][1]&&matrix[0][1]==matrix[0][2]&&matrix[0][2]!='s')
@@ -93,7 +93,7 @@ char random_moves(char matrix[][3][3][3],char main_matrix[][3],int firstmove[])
 	int iplay=-1;
 	int jplay=-1;
 	int xrand,yrand;
-
+	sum++;
 	matrix[firstmove[0]][firstmove[1]][firstmove[2]][firstmove[3]]='o';
 
 	if(check_winner(matrix[firstmove[0]][firstmove[1]])=='o')
@@ -151,7 +151,7 @@ char random_moves(char matrix[][3][3][3],char main_matrix[][3],int firstmove[])
 			yrand=rand()%3;
 		}
 		while(matrix[iplay][jplay][xrand][yrand]!='s');
-
+		sum++;
 		matrix[iplay][jplay][xrand][yrand]='x';
 		if(check_winner(matrix[iplay][jplay])=='x')
 		{
@@ -385,7 +385,8 @@ int main()
 				}
 			}
 			temp=random_moves(copy_matrix,copy_main,positions[currpos]);
-
+			number++; 
+			
 			if(temp=='o')
 				noofwins+=1;
 			else if (temp=='x')
@@ -405,7 +406,8 @@ int main()
                         best_pos[3]=positions[currpos][3];
 		}	
 	}
-
+	sum/=number;
+	printf("%f",sum);
 	fprintf(fpoutput,"%d %d %d %d\n",best_pos[0],best_pos[1],best_pos[2],best_pos[3]);
         //printf("%d %d %d %d\n",best_pos[0],best_pos[1],best_pos[2],best_pos[3]);
 
