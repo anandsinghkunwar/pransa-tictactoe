@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+int count=0;
 struct Node
 	{
 		int val;
@@ -207,6 +208,8 @@ int maxmove(struct Node * present)
 
 int minimax(struct Node *current,char turn,char matrix[3][3][3][3],char main_matrix[3][3],char x,char y,char w, char z)
 	{
+		count ++;
+		printf("%d\n",count);
 		int p,i,j,f,l,*empty,k,move;
 		char a,b,c,d;
 		empty = NULL;
