@@ -1,10 +1,6 @@
 #include <stdio.h>
 int scoreline (int com, int opp);
 int value (char matrix[3][3]);
-int main ()
-{
-return 0;
-}
 int scoreline (int com, int opp)
 {
 	if (com == 3)
@@ -19,6 +15,8 @@ int scoreline (int com, int opp)
 		return 1;
 	else if (com == 0 && opp == 1)
 		return -1;
+	else
+		return 0;
 }
 
 int value (char matrix[3][3])
@@ -30,9 +28,10 @@ int value (char matrix[3][3])
 		com = 0, opp = 0;
 		for (j = 0; j < 3; j++)
 		{
-			if (matrix[i][j] == 'o')
+			if (matrix[i][j] == 'x')
 				com++;
-			else if (matrix[i][j] == 'x')
+			else if (matrix[i][j] == 'o')
+
 				opp++;
 		}
 
@@ -46,9 +45,9 @@ int value (char matrix[3][3])
 		com = 0, opp = 0;
 		for (i = 0; i < 3; i++)
 		{
-			if (matrix[i][j] == 'o')
+			if (matrix[i][j] == 'x')
 				com++;
-			else if (matrix[i][j] == 'x')
+			else if (matrix[i][j] == 'o')
 				opp++;
 		}
 
@@ -58,9 +57,9 @@ int value (char matrix[3][3])
 	com = 0, opp = 0;
 	for (i = 0; i < 3; i++)
 	{
-		if (matrix[i][i] == 'o')
+		if (matrix[i][i] == 'x')
 			com++;
-		else if (matrix[i][i] == 'x')
+		else if (matrix[i][i] == 'o')
 			opp++;
 	}
 
@@ -69,9 +68,9 @@ int value (char matrix[3][3])
 	com = 0, opp = 0;
 	for (i = 0; i < 3; i++)
 	{
-		if (matrix[i][2-i] == 'o')
+		if (matrix[i][2-i] == 'x')
 			com++;
-		else if (matrix[i][2-i] == 'x')
+		else if (matrix[i][2-i] == 'o')
 			opp++;
 	}
 
@@ -79,3 +78,15 @@ int value (char matrix[3][3])
 	
 	return score;
 }
+
+int main()
+	{
+		char matrix[3][3],temp;
+		int i,j;
+		for(i=0;i<3;i++)
+			for(j=0;j<3;j++)
+				scanf("%c%c",&matrix[i][j],&temp);
+		printf("%d",value(matrix));
+		
+		return 0;
+	}
