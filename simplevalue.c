@@ -28,7 +28,7 @@ int value (char matrix[3][3])
 	for (i = 0; i < 3; i++)
 	{
 		com = 0, opp = 0;
-		for (j = 0, j < 3; j++)
+		for (j = 0; j < 3; j++)
 		{
 			if (matrix[i][j] == 'o')
 				com++;
@@ -78,3 +78,4 @@ int value (char matrix[3][3])
 	score = score + scoreline(com, opp);
 	
 	return score;
+}
