@@ -417,7 +417,7 @@ int main()
 	}
 	
 	sum/=number;
-	printf("%f",(flag==0)?(sum):(1.0));
+	printf("%f ",(flag==0)?(sum):(1.0));
 	fprintf(fpoutput,"%d %d %d %d\n",best_pos[0],best_pos[1],best_pos[2],best_pos[3]);
         //printf("%d %d %d %d\n",best_pos[0],best_pos[1],best_pos[2],best_pos[3]);
 
