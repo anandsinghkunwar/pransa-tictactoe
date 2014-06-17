@@ -311,23 +311,26 @@ int minimax(struct Node * present,int alpha, int beta, char depth, char turn,cha
                        		}
 				present->child[i]=(struct Node *) malloc(sizeof(struct Node));
 				copy[a][b][c][d]=turn;
-				if(i==0)
+                                temp=alpha;
+				alpha=max(alpha,minimax(present->child[i],alpha,beta,depth-1,'o',copy,main_matrix,a,b,c,d));
+				if(depth==10)
+                                {       if(i==0)
                                         {
                                                 movea=a;
                                                 moveb=b;
                                                 movec=c;
                                                 moved=d;
                                         }
-                                temp=alpha;
-				alpha=max(alpha,minimax(present->child[i],alpha,beta,depth-1,'o',copy,main_matrix,a,b,c,d));
-				if(temp!=alpha)
+                                        if(temp!=alpha)
                                         {
-						movea=a;
+                                                movea=a;
                                                 moveb=b;
                                                 movec=c;
                                                 moved=d;
-				//		printf("%d %d %d %d\n",a,b,c,d);
+                                //              printf("%d %d %d %d\n",a,b,c,d);
                                         }
+                                }
+                                
 				if(beta<=alpha)
 					break;
 			}
@@ -357,22 +360,26 @@ int minimax(struct Node * present,int alpha, int beta, char depth, char turn,cha
                                 }
 				present->child[i]=(struct Node *) malloc(sizeof(struct Node));
                                 copy[a][b][c][d]=turn;
-				if(i==0)
-					{
+				temp=beta;
+				beta=min(beta,minimax(present->child[i],alpha,beta,depth-1,'x',copy,main_matrix,a,b,c,d));
+				if(depth==10)
+                                {       if(i==0)
+                                        {
                                                 movea=a;
                                                 moveb=b;
                                                 movec=c;
                                                 moved=d;
                                         }
-				temp=beta;
-				beta=min(beta,minimax(present->child[i],alpha,beta,depth-1,'x',copy,main_matrix,a,b,c,d));
-                                if(temp!=beta)
-					{
-						movea=a;
-                        			moveb=b;
-                       				movec=c;
-                        			moved=d;
-					}
+                                        if(temp!=beta)
+                                        {
+                                                movea=a;
+                                                moveb=b;
+                                                movec=c;
+                                                moved=d;
+                                //              printf("%d %d %d %d\n",a,b,c,d);
+                                        }
+                                }
+                                
 				if(beta<=alpha)
                                         break;
                         }
@@ -417,8 +424,8 @@ int main()
                         main_matrix[i][j]=check_winner(matrix[i][j]);
                 }
         }
-	struct Node *root= (struct Node *) malloc(sizeof(struct Node));
-	move=minimax(root,-100,100,10,turn,matrix,main_matrix,-1,-1,iplay,jplay);
+	struct Node * root= (struct Node *) malloc(sizeof(struct Node));
+	move=minimax(root,-101,101,10,turn,matrix,main_matrix,-1,-1,iplay,jplay);
 	printf("Win/Loss=%d \nMove=%d %d %d %d\n",move,movea,moveb,movec,moved);
         return 0;
 
