@@ -54,59 +54,78 @@ int scoreline (int com, int opp)
 
 int value (char matrix[3][3])
 {
-	int i, j, k, com = 0, opp = 0, score = 0;
+	int i, j, k, com = 0, opp = 0, score = 0,flag = 0;
 
 	for (i = 0; i < 3; i++)
 	{
-		com = 0, opp = 0;
+		com = 0, opp = 0, flag = 0;
 		for (j = 0; j < 3; j++)
 		{
+			if (matrix[i][2-i] == 't')
+                        {flag=1;
+                        break;}
+
 			if (matrix[i][j] == 'x')
 				com++;
 			else if (matrix[i][j] == 'o')
 
 				opp++;
 		}
-
+		if(flag == 0)
 		score = score + scoreline(com, opp);
 
 	
 	}
-
 	for (j = 0; j < 3; j++)
 	{
-		com = 0, opp = 0;
+		com = 0, opp = 0, flag = 0;
 		for (i = 0; i < 3; i++)
 		{
+			if (matrix[i][2-i] == 't')
+                        {flag=1;
+                        break;}
+
 			if (matrix[i][j] == 'x')
 				com++;
 			else if (matrix[i][j] == 'o')
 				opp++;
 		}
 
+		if (flag == 0)
 		score = score + scoreline(com, opp);	
 	}
 	
-	com = 0, opp = 0;
+	com = 0, opp = 0, flag = 0;
 	for (i = 0; i < 3; i++)
 	{
+		if (matrix[i][2-i] == 't')
+                        {
+				flag=1;
+                        	break;
+			}
+
 		if (matrix[i][i] == 'x')
 			com++;
 		else if (matrix[i][i] == 'o')
 			opp++;
 	}
 
+	if (flag == 0)
 	score = score + scoreline(com, opp);
 
-	com = 0, opp = 0;
+	com = 0, opp = 0, flag = 0;
 	for (i = 0; i < 3; i++)
 	{
+		if (matrix[i][2-i] == 't')
+			{flag=1;
+			break;}
 		if (matrix[i][2-i] == 'x')
 			com++;
 		else if (matrix[i][2-i] == 'o')
 			opp++;
 	}
 
+	if (flag == 0)
 	score = score + scoreline(com, opp);
 //	printf("score = %d\n",score);	
 	return score;
