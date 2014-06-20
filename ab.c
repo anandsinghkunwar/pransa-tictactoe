@@ -420,7 +420,8 @@ int minimax(struct Node * present,int alpha, int beta, char depth, char turn,cha
                                                 }
 				beta=min(beta,minimax(present->child[i],alpha,beta,depth-1,'x',copy,copy_main,a,b,c,d));
 				if(depth==10)
-                                {       if(i==0)
+                                {   //    printf("beta= %d i=%d %d %d %d %d\n",beta,i,a,b,c,d);
+					if(i==0)
                                         {
                                                 movea=a;
                                                 moveb=b;
@@ -433,7 +434,6 @@ int minimax(struct Node * present,int alpha, int beta, char depth, char turn,cha
                                                 moveb=b;
                                                 movec=c;
                                                 moved=d;
-                                        //      printf("%d %d %d %d\n",a,b,c,d);
                                       
                                         }
                                 }
