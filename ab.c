@@ -361,6 +361,7 @@ int minimax(struct Node * present,int alpha, int beta, char depth, char turn,cha
 		//		printf("beta=%d alpha=%d i=%d\n",beta,alpha,i);
 				if(depth==10)
                                 {       //printf("beta=%d alpha=%d i=%d\n",beta,alpha,i);
+					//printf("beta= %d i=%d %d %d %d %d\n",beta,i,a,b,c,d);
 					if(i==0)
                                         {
                                                 movea=a;
@@ -420,7 +421,7 @@ int minimax(struct Node * present,int alpha, int beta, char depth, char turn,cha
                                                 }
 				beta=min(beta,minimax(present->child[i],alpha,beta,depth-1,'x',copy,copy_main,a,b,c,d));
 				if(depth==10)
-                                {   //    printf("beta= %d i=%d %d %d %d %d\n",beta,i,a,b,c,d);
+                                {       //printf("beta= %d i=%d %d %d %d %d\n",beta,i,a,b,c,d);
 					if(i==0)
                                         {
                                                 movea=a;
@@ -454,18 +455,17 @@ int main()
 	{
 	char matrix[3][3][3][3];
 	char main_matrix[3][3];
-	int iplay,jplay,turn,move;
-	char temp;
-	scanf("%c",&turn);
-	scanf("%c",&temp);
+	int iplay,jplay,move;
+	char temp,turn;
+	scanf("%c%c",&turn,&temp);
+	if(turn=='O')
+                turn='o';
+        else
+                turn='x';
 	scanf("%d %d",&iplay,&jplay);
 	scanf("%c",&temp);
-        int i,j,k,l,a,b,c,d;
-	if(turn=='O')
-		turn='o';
-	else
-		turn='x';
-        for(i=0;i<3;i++)
+	int i,j,k,l,a,b,c,d;
+	for(i=0;i<3;i++)
         {
                 for(j=0;j<3;j++)
                 {
@@ -490,8 +490,8 @@ int main()
                 }
         }
 	struct Node * root= (struct Node *) malloc(sizeof(struct Node));
-		move=minimax(root,-101,101,10,turn,matrix,main_matrix,-1,-1,iplay,jplay);
-	printf("%d %d %d %d %d\n",move,movea,moveb,movec,moved);
+	move=minimax(root,-101,101,10,turn,matrix,main_matrix,-1,-1,iplay,jplay);
+	printf("%d %d %d %d\n",movea,moveb,movec,moved);
         return 0;
 
 	}
