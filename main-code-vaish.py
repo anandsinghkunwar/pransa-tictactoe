@@ -103,6 +103,8 @@ jprev=-1
 
 screen.blit(BackgroundimageObject,(0,0))
 
+call(["gcc", "./ab.c", "-o", "./playmini"])
+
 while True:
 
     for event in pygame.event.get():
