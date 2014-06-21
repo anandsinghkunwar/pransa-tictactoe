@@ -104,7 +104,7 @@ jprev=-1
 
 screen.blit(BackgroundimageObject,(0,0))
 
-call(["gcc","./ab.c","-o","./playmini"])
+call(["gcc","./alphabeta.c","-o","./playmini"])
 
 while True:
 
