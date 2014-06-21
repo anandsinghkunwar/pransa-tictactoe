@@ -1,5 +1,6 @@
 import pygame, sys
 from pygame.locals import *
+from subprocess import call
 
 def check_win_main(matrix):
 
@@ -103,6 +104,8 @@ jprev=-1
 
 screen.blit(BackgroundimageObject,(0,0))
 
+call(["gcc","./ab.c","-o","./playmini"])
+
 while True:
 
     for event in pygame.event.get():
@@ -181,6 +184,73 @@ while True:
                                 if(main_matrix[iprev][jprev]!='s'):
                                     iprev=-1
                                     jprev=-1
-                                
+
+                                #Separation
+
+                                fout=open("./data/matrixforai.txt","w")
+				fout.write("O" + "\n")
+                                fout.write(str(iprev)+" "+str(jprev)+"\n")
+
+                                for var1 in range(3):
+                                    for var2 in range(3):
+                                        for var3 in range(3):
+                                            for var4 in range(3):
+                                                if(matrix[var1][var3][var2][var4]=='s'):
+                                                    fout.write("-")
+                                                elif(matrix[var1][var3][var2][var4]=='x'):
+                                                    fout.write("X")
+                                                elif(matrix[var1][var3][var2][var4]=='o'):
+                                                    fout.write("O")
+                                        fout.write("\n")
+                                fout.write("\n")            #idk
+                                fout.close()
+
+                                pygame.display.update()
+
+                                print "Please wait"         
+                                call(["./playmini"])
+
+                                fin=open("./data/aimove.txt","r")
+
+                                a=fin.read()
+
+                                print a
+                                a=a.split()
+
+                                fin.close()
+
+                                var1=int(a[0])
+                                var2=int(a[1])
+                                var3=int(a[2])
+                                var4=int(a[3])
+
+                                screen.blit(OSMALLimageObject,coord_of_cells[var1][var2][var3][var4])
+                                player+=1
+                                matrix[var1][var2][var3][var4]='o'
+                                iprev=var3
+                                jprev=var4
+
+                                if(check_winner(matrix[var1][var2])!='s'):
+                                    if(check_winner(matrix[var1][var2])=='o'):
+                                        screen.blit(OLARGEimageObject,coord_of_cells[var1][var2][0][0])
+                                        main_matrix[var1][var2]='o'
+
+                                    else:
+                                        screen.blit(TLARGEimageObject,coord_of_cells[var1][var2][0][0])
+                                        main_matrix[var1][var2]='t'
+
+                                    if(check_win_main(main_matrix)!='s'):
+
+                                        if(check_win_main(main_matrix)!='t'):
+                                            print "The winner is "+ check_win_main(main_matrix)
+                                        else:
+                                            print "The game is a tie"
+					
+                                        pygame.quit()
+                                        sys.exit()
+
+                                if(main_matrix[iprev][jprev]!='s'):
+                                    iprev=-1
+                                    jprev=-1
 
     pygame.display.update()

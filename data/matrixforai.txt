@@ -1,0 +1,12 @@
+O
+-1 -1
+XO-OXOO-X
+O---O---O
+-OX-X-XO-
+X---XXX-X
+X--OOO-X-
+X----X---
+----OO-O-
+OO--X--O-
+-----X-O-
+
