@@ -122,7 +122,7 @@ while True:
                             if ((pos[0]>coord_of_cells[x][y][i][j][0])and(pos[0]<coord_of_cells[x][y][i][j][0]+70)and(pos[1]>coord_of_cells[x][y][i][j][1])and(pos[1]<coord_of_cells[x][y][i][j][1]+70)):
 
                                 if (matrix[x][y][i][j]!='s'):
-                                    pass
+                                    continue
 
                                 elif((iprev==-1)and(jprev==-1)):
                                     if(main_matrix[x][y]=='s'):
@@ -156,7 +156,7 @@ while True:
                                         jprev=j
 
                                 else:
-                                    pass
+                                    continue
 
                                 if(check_winner(matrix[x][y])!='s'):
                                     if(check_winner(matrix[x][y])=='x'):
@@ -188,7 +188,12 @@ while True:
                                 #Separation
 
                                 fout=open("./data/matrixforai.txt","w")
-				fout.write("O" + "\n")
+
+				if (player%2 == 1):
+					fout.write("x" + "\n")
+				else:
+					fout.write("O" + "\n")
+
                                 fout.write(str(iprev)+" "+str(jprev)+"\n")
 
                                 for var1 in range(3):
