@@ -1,7 +1,6 @@
 import pygame, sys
 from pygame.locals import *
 from subprocess import call
-
 def check_win_main(matrix):
 
     copy_matrix_x=[['s' for x in xrange(3)] for x in xrange(3)]
@@ -86,7 +85,8 @@ osimg="./img/osmall.png"
 xlimg="./img/xbig.png"
 olimg="./img/obig.png"
 timg="./img/tie.png"
-
+psmall="./img/presentsmall.png"
+pbig="./img/presentbig.png"
 pygame.init()
     
 screen=pygame.display.set_mode((630,630),0,32)
@@ -97,14 +97,38 @@ OSMALLimageObject=pygame.image.load(osimg).convert_alpha()
 XLARGEimageObject=pygame.image.load(xlimg).convert_alpha()
 OLARGEimageObject=pygame.image.load(olimg).convert_alpha()
 TLARGEimageObject=pygame.image.load(timg).convert_alpha()
+PRESENTSMALLimageObject=pygame.image.load(psmall).convert_alpha()
+PRESENTLARGEimageObject=pygame.image.load(pbig).convert_alpha()
 
 player=1
 iprev=-1
 jprev=-1
+class Board(pygame.sprite.Sprite):
 
-screen.blit(BackgroundimageObject,(0,0))
+    # Constructor. Pass in the color of the block,
+    # and its x and y position
+    def __init__(self,img):
+       # Call the parent class (Sprite) constructor
+       pygame.sprite.Sprite.__init__(self)
+       self.image = img
+       self.rect = self.image.get_rect()
 
-call(["gcc","./alphabeta.c","-o","./playmini"])
+board = Board(BackgroundimageObject)
+board.rect= [0,0]
+all_sprite_list = pygame.sprite.OrderedUpdates()
+
+all_sprite_list.add(board)
+all_sprite_list.draw(screen)
+pygame.display.flip()
+call(["gcc","./alphabeta.c","-o","./playmini"])		#Compiles the program for different systems
+highg=0
+highlight = Board(PRESENTLARGEimageObject)
+highlight.rect= [0,0]
+all_sprite_list.add(highlight)
+all_sprite_list.draw(screen)
+highg=highlight
+pygame.display.flip()
+
 
 while True:
 
@@ -112,7 +136,8 @@ while True:
         if event.type==QUIT:
             pygame.quit()
             sys.exit()
-
+        
+        
         if event.type==MOUSEBUTTONDOWN:
             pos=pygame.mouse.get_pos()
             for x in xrange(3):
@@ -127,30 +152,50 @@ while True:
                                 elif((iprev==-1)and(jprev==-1)):
                                     if(main_matrix[x][y]=='s'):
                                         if(player%2==1):
-                                            screen.blit(XSMALLimageObject,coord_of_cells[x][y][i][j])
-                                            player+=1
+                                            
+                                            board = Board(XSMALLimageObject)
+                                            board.rect= coord_of_cells[x][y][i][j]
+                                            all_sprite_list.add(board)
+                                            all_sprite_list.draw(screen)
+                                            pygame.display.flip()
+					    player+=1
                                             matrix[x][y][i][j]='x'
                                             iprev=i
                                             jprev=j
 
                                         else:
-                                            screen.blit(OSMALLimageObject,coord_of_cells[x][y][i][j])
+                                            board = Board(OSMALLimageObject)
+                                            board.rect= coord_of_cells[x][y][i][j]
+                                            
+                                            all_sprite_list.add(board)
+                                            all_sprite_list.draw(screen)
+                                            pygame.display.flip()
                                             player+=1
                                             matrix[x][y][i][j]='o'
                                             iprev=i
                                             jprev=j
                                     else:
-					continue 
+                                        continue
                                 elif((x==iprev)and(y==jprev)):
                                     if(player%2==1):
-                                        screen.blit(XSMALLimageObject,coord_of_cells[x][y][i][j])
+                                        board = Board(XSMALLimageObject)
+                                        board.rect= coord_of_cells[x][y][i][j]
+                                        
+                                        all_sprite_list.add(board)
+                                        all_sprite_list.draw(screen)
+                                        pygame.display.flip()
                                         player+=1
                                         matrix[x][y][i][j]='x'
                                         iprev=i
                                         jprev=j
                                         
                                     else:
-                                        screen.blit(OSMALLimageObject,coord_of_cells[x][y][i][j])
+                                        board = Board(OSMALLimageObject)
+                                        board.rect= coord_of_cells[x][y][i][j]
+                                        
+                                        all_sprite_list.add(board)
+                                        all_sprite_list.draw(screen)
+                                        pygame.display.flip()
                                         player+=1
                                         matrix[x][y][i][j]='o'
                                         iprev=i
@@ -161,15 +206,27 @@ while True:
 
                                 if(check_winner(matrix[x][y])!='s'):
                                     if(check_winner(matrix[x][y])=='x'):
-                                        screen.blit(XLARGEimageObject,coord_of_cells[x][y][0][0])
+                                        board = Board(XLARGEimageObject)
+                                        board.rect= coord_of_cells[x][y][0][0]
+                                        all_sprite_list.add(board)
+                                        all_sprite_list.draw(screen)
+                                        pygame.display.flip()
                                         main_matrix[x][y]='x'
 
                                     elif(check_winner(matrix[x][y])=='o'):
-                                        screen.blit(OLARGEimageObject,coord_of_cells[x][y][0][0])
+                                        board = Board(OLARGEimageObject)
+                                        board.rect= coord_of_cells[x][y][0][0]
+                                        all_sprite_list.add(board)
+                                        all_sprite_list.draw(screen)
+                                        pygame.display.flip()
                                         main_matrix[x][y]='o'
 
                                     else:
-                                        screen.blit(TLARGEimageObject,coord_of_cells[x][y][0][0])
+                                        board = Board(TLARGEimageObject)
+                                        board.rect= coord_of_cells[x][y][0][0] 
+                                        all_sprite_list.add(board)
+                                        all_sprite_list.draw(screen)
+                                        pygame.display.flip()
                                         main_matrix[x][y]='t'
 
                                     if(check_win_main(main_matrix)!='s'):
@@ -186,15 +243,16 @@ while True:
                                     iprev=-1
                                     jprev=-1
 
-                                #Separation
-
+                                #Finished one move
+                                all_sprite_list.remove(highlight)
+                                pygame.display.flip()
                                 fout=open("./data/matrixforai.txt","w")
 
-				if (player%2 == 1):
-					fout.write("x" + "\n")
-				else:
-					fout.write("O" + "\n")
-
+                                if (player%2 == 1):
+                                    fout.write("x" + "\n")
+                                else:
+                                    fout.write("O" + "\n")
+                                    
                                 fout.write(str(iprev)+" "+str(jprev)+"\n")
 
                                 for var1 in range(3):
@@ -208,12 +266,12 @@ while True:
                                                 elif(matrix[var1][var3][var2][var4]=='o'):
                                                     fout.write("O")
                                         fout.write("\n")
-                                fout.write("\n")            #idk
+                                fout.write("\n")            #Is this required??
                                 fout.close()
 
-                                pygame.display.update()
+                                pygame.display.update() # Required?
 
-                                print "Please wait"         
+                                print "Please wait"                 #Debugging
                                 call(["./playmini"])
 
                                 fin=open("./data/aimove.txt","r")
@@ -230,7 +288,12 @@ while True:
                                 var3=int(a[2])
                                 var4=int(a[3])
 
-                                screen.blit(OSMALLimageObject,coord_of_cells[var1][var2][var3][var4])
+                                board = Board(OSMALLimageObject)
+                                board.rect= coord_of_cells[var1][var2][var3][var4]
+                                
+                                all_sprite_list.add(board)
+                                all_sprite_list.draw(screen)
+                                pygame.display.flip()
                                 player+=1
                                 matrix[var1][var2][var3][var4]='o'
                                 iprev=var3
@@ -238,11 +301,20 @@ while True:
 
                                 if(check_winner(matrix[var1][var2])!='s'):
                                     if(check_winner(matrix[var1][var2])=='o'):
-                                        screen.blit(OLARGEimageObject,coord_of_cells[var1][var2][0][0])
+                                        board = Board(OLARGEimageObject)
+                                        board.rect= coord_of_cells[var1][var2][0][0]
+                                        
+                                        all_sprite_list.add(board)
+                                        all_sprite_list.draw(screen)
+                                        pygame.display.flip()
                                         main_matrix[var1][var2]='o'
 
                                     else:
-                                        screen.blit(TLARGEimageObject,coord_of_cells[var1][var2][0][0])
+                                        board = Board(TLARGEimageObject)
+                                        board.rect= coord_of_cells[var1][var2][0][0]
+                                        all_sprite_list.add(board)
+                                        all_sprite_list.draw(screen)
+                                        pygame.display.flip()
                                         main_matrix[var1][var2]='t'
 
                                     if(check_win_main(main_matrix)!='s'):
@@ -258,5 +330,22 @@ while True:
                                 if(main_matrix[iprev][jprev]!='s'):
                                     iprev=-1
                                     jprev=-1
+                                
+                                if ((iprev==-1)and(jprev==-1)):
+                                    highlight = Board(PRESENTLARGEimageObject)
+                                    highg = highlight
+                                    highlight.rect= [0,0]
+                                    all_sprite_list.add(highlight)
+                                    all_sprite_list.draw(screen)
+                                    pygame.display.flip()
+                                else:
+                                    highlight = Board(PRESENTSMALLimageObject)
+                                    highg = highlight
+                                    highlight.rect= coord_of_cells[iprev][jprev][0][0]
+                                    all_sprite_list.add(highlight)
+                                    all_sprite_list.draw(screen)
+                                    pygame.display.flip()
 
-    pygame.display.update()
+                                
+                                #Code added here only
+
