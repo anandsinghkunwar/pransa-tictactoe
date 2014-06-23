@@ -164,7 +164,7 @@ while True:
                                             matrix[x][y][i][j]='x'
                                             iprev=i
                                             jprev=j
-
+                                
                                         else:
                                             board = Board(OSMALLimageObject)
                                             board.rect= coord_of_cells[x][y][i][j]
@@ -176,7 +176,8 @@ while True:
                                             matrix[x][y][i][j]='o'
                                             iprev=i
                                             jprev=j
-                                
+                                    else:
+                                        continue
                                 elif((x==iprev)and(y==jprev)):
                                     if(player%2==1):
                                         board = Board(XSMALLimageObject)
@@ -229,7 +230,7 @@ while True:
                                         all_sprite_list.draw(screen)
                                         pygame.display.flip()
                                         main_matrix[x][y]='t'
-
+                                
                                     if(check_win_main(main_matrix)!='s'):
 
                                         if(check_win_main(main_matrix)!='t'):
@@ -239,7 +240,7 @@ while True:
 
                                         pygame.quit()
                                         sys.exit()
-
+                                
                                 if(main_matrix[iprev][jprev]!='s'):
                                     iprev=-1
                                     jprev=-1
