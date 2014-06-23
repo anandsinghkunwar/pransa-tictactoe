@@ -351,7 +351,7 @@ int main()
 	
 	srand(time(NULL));
 	
-	double timepermove=5.0/noofpositions;
+	double timepermove=1.0/noofpositions;
 
 	for(currpos=0;currpos<noofpositions;currpos++)
 	{
