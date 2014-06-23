@@ -87,10 +87,12 @@ olimg="./img/obig.png"
 timg="./img/tie.png"
 psmall="./img/presentsmall.png"
 pbig="./img/presentbig.png"
+mus="./img/music.ogg"
 pygame.init()
-    
+pygame.mixer.init()
+pygame.mixer.music.load(mus)
 screen=pygame.display.set_mode((630,630),0,32)
-
+pygame.mixer.music.play(-1, 0.0)
 BackgroundimageObject=pygame.image.load(bg).convert()
 XSMALLimageObject=pygame.image.load(xsimg).convert_alpha()
 OSMALLimageObject=pygame.image.load(osimg).convert_alpha()
