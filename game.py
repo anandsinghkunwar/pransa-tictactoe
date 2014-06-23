@@ -174,7 +174,8 @@ while True:
                                             matrix[x][y][i][j]='o'
                                             iprev=i
                                             jprev=j
-                                
+                                    else:
+                                        continue
                                 elif((x==iprev)and(y==jprev)):
                                     if(player%2==1):
                                         board = Board(XSMALLimageObject)
