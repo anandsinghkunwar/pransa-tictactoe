@@ -11,7 +11,7 @@ A detailed description of the complicated rules is available on http://mathwithb
 ##Requirements and Tests
 
 Tested to work on Fedora 20-64 bit and 32 bit machines.  
-You will require python,gcc commands and pygame,sys modules for python to run this game.
+You will require **python,gcc** commands and **pygame,sys** modules for python to run this game.
 
 ##Play Our AI
 
