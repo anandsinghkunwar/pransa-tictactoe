@@ -139,8 +139,8 @@ while True:
     for event in pygame.event.get():
         if event.type==QUIT:
             pygame.quit()
-            deletecontent("./data/aimove.txt");
-	    deletecontent("./data/matrixforai.txt");
+	    deletecontent("./data/aimove.txt")
+	    deletecontent("./data/matrixforai.txt")
             sys.exit()
         
         if event.type==MOUSEBUTTONDOWN:
@@ -242,8 +242,8 @@ while True:
                                             print "The game is a tie"
 
                                         pygame.quit()
-					deletecontent("./data/aimove.txt");
-					deletecontent("./data/matrixforai.txt");
+					deletecontent("./data/aimove.txt")
+					deletecontent("./data/matrixforai.txt")
                                         sys.exit()
 
                                 if(main_matrix[iprev][jprev]!='s'):
@@ -326,8 +326,8 @@ while True:
                                             print "The game is a tie"
 					
                                         pygame.quit()
-					deletecontent("./data/aimove.txt");
-					deletecontent("./data/matrixforai.txt");
+					deletecontent("./data/aimove.txt")
+					deletecontent("./data/matrixforai.txt")
                                         sys.exit()
 
                                 if(main_matrix[iprev][jprev]!='s'):
