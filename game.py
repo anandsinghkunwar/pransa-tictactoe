@@ -1,4 +1,4 @@
-import pygame, sys
+import pygame, sys, os
 from pygame.locals import *
 from subprocess import call
 def check_win_main(matrix):
@@ -141,6 +141,7 @@ while True:
             pygame.quit()
 	    deletecontent("./data/aimove.txt")
 	    deletecontent("./data/matrixforai.txt")
+	    os.remove("./playmonte")
             sys.exit()
         
         
@@ -245,6 +246,7 @@ while True:
                                         pygame.quit()
 					deletecontent("./data/aimove.txt")
 					deletecontent("./data/matrixforai.txt")
+					os.remove("./playmonte")
                                         sys.exit()
 
                                 if(main_matrix[iprev][jprev]!='s'):
@@ -329,6 +331,7 @@ while True:
                                         pygame.quit()
 					deletecontent("./data/aimove.txt")
 					deletecontent("./data/matrixforai.txt")
+					os.remove("./playmonte")
                                         sys.exit()
 
                                 if(main_matrix[iprev][jprev]!='s'):
