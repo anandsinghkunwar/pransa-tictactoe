@@ -68,6 +68,10 @@ def check_winner(matrix):
                     return 's'
     return 't'
 
+def deletecontent(filename):
+	with open(filename, "w"):
+		pass
+
 matrix=[[[['s','s','s'],['s','s','s'],['s','s','s']] for x in xrange(3)] for x in xrange(3)]
 main_matrix=[['s','s','s'],['s','s','s'],['s','s','s']]
 
@@ -135,6 +139,8 @@ while True:
     for event in pygame.event.get():
         if event.type==QUIT:
             pygame.quit()
+	    deletecontent("./data/aimove.txt")
+	    deletecontent("./data/matrixforai.txt")
             sys.exit()
         
         
@@ -237,6 +243,8 @@ while True:
                                             print "The game is a tie"
 
                                         pygame.quit()
+					deletecontent("./data/aimove.txt")
+					deletecontent("./data/matrixforai.txt")
                                         sys.exit()
 
                                 if(main_matrix[iprev][jprev]!='s'):
@@ -319,6 +327,8 @@ while True:
                                             print "The game is a tie"
 					
                                         pygame.quit()
+					deletecontent("./data/aimove.txt")
+					deletecontent("./data/matrixforai.txt")
                                         sys.exit()
 
                                 if(main_matrix[iprev][jprev]!='s'):
@@ -342,4 +352,3 @@ while True:
 
                                 
                                 #Code added here only
-
